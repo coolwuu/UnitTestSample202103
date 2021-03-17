@@ -8,11 +8,14 @@ namespace Model.Service
     public class AuthService2 : IAuthService
     {
         private readonly IAccountDbRepo _accountDbRepo;
+        private readonly ILogger _logger;
 
         public AuthService2()
         {
             _accountDbRepo = new AccountDbRepo();
+            _logger = new ConsoleLogger();
         }
+
         public bool Login(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -27,6 +30,7 @@ namespace Model.Service
                 return true;
             }
 
+            _logger.Error($"Username:{username} login failed.");
             return false;
         }
     }
